@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <h1>Weather</h1>
+    <h2 id="city_display"></h2>
+    <h2 id="temperature_display"></h2>
+    <script >
+        async function main() {
+        const api_key = "6ad97f1c03fd36e7b9cbf23cf9b74b4b";
+        const geo_response = await fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=2740,CH&appid=${api_key}`);
+        const geo_data = await geo_response.json();
+
+        const weather_response = await fetch(`https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${geo_data.lat}&lon=${geo_data.lon}&appid=${api_key}`)
+        const weather_data = await weather_response.json(); 
+        city_content = document.getElementById('city_display');
+        city_content.innerHTML = `Météo actuelle à ${weather_data.name}`
+        temp_content = document.getElementById('temperature_display');
+        temp_content.innerHTML = `Température : ${weather_data.main.temp} °C`
+
+        console.log(weather_data);
+        }
+        main().catch(console.error);
+
+    </script>
+</body>
+</html>
